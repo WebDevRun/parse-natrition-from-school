@@ -1,10 +1,12 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.bodyWrapper {
+#wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -61,6 +63,16 @@
   padding: 10px 20px;
 }
 
+.summary {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.summary__school {
+  margin-right: 20px;
+}
+
 .details__error {
   margin: 7px 0;
   padding: 10px 20px;
@@ -75,6 +87,10 @@
 
 .summary-good {
   background-color: #52cc8b;
+}
+
+.summary__info {
+  margin-right: 10px;
 }
 
 .table {
@@ -111,32 +127,32 @@
 
 @media (max-width: 576px) {
   .header__h1 {
-    font-size: .9em;
+    font-size: 0.9em;
   }
 
   .details__summary {
-    font-size: .9em;
+    font-size: 0.9em;
   }
 
   .table {
-    font-size: .8em;
+    font-size: 0.8em;
   }
-  
+
   .footer {
-    font-size: .8em;
+    font-size: 0.8em;
   }
 }
 
 @media (max-width: 320px) {
   .header__h1 {
-    font-size: .8em;
+    font-size: 0.8em;
   }
 
   .details__summary {
-    font-size: .8em;
+    font-size: 0.8em;
   }
 
   .table {
-    font-size: .65em;
+    font-size: 0.65em;
   }
 }

@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "target": "ES2016",
+    "allowJs": false,
+    "lib": ["DOM"]
+  },
+  "files": ["src/index.ts"]
+}
