@@ -1,31 +1,29 @@
 import DataFromServer from './utils/dataFormServer'
-import { HTMLElement } from './HTMLElement'
-import HTMLParser from './HTMLParser'
+import { HTMLElement } from './HTMLWorker/HTMLElement'
+import HTMLParser from './HTMLWorker/HTMLParser'
 import DateWorker from './utils/dateWorker'
 import { schools } from './info/schools'
 import { tagText } from './info/tagText'
 
 async function createHTML() {
   const wrapper = <HTMLDivElement>document.querySelector('#wrapper')
+  const header = HTMLElement.createHeader()
+  const mainLoader = HTMLElement.createMain({ loader: true })
+  const footer = HTMLElement.createFooter()
+  const loader = HTMLElement.createDivLoader()
+
+  mainLoader.append(loader)
+  wrapper.append(header, mainLoader, footer)
+
+  const mainContent = HTMLElement.createMain({ loader: false })
   const resultsData = await DataFromServer.getResults(schools)
-  const header = HTMLElement.create('header', ['header'])
-  const h1 = HTMLElement.create('h1', ['header__h1'], tagText.headerText)
-  const main = HTMLElement.create('main', ['main'])
-  const lifeYears = DateWorker.getYearString()
-  const footer = HTMLElement.create(
-    'footer',
-    ['footer'],
-    `${tagText.authorName}, ${lifeYears}`,
-  )
 
   for (const resultData of resultsData) {
     if (resultData.body instanceof Error) {
-      const errorMessageTag = HTMLElement.create(
-        'p',
-        ['details__error'],
+      const errorMessageTag = HTMLElement.createP(
         `${tagText.errors.notLinked} ${resultData.school}: ${resultData.url}`,
       )
-      main.append(errorMessageTag)
+      mainContent.append(errorMessageTag)
       continue
     }
 
@@ -39,11 +37,7 @@ async function createHTML() {
       tagText.findexFile.name,
     )
 
-    const details = HTMLElement.create('details', [
-      'infoWrapper__details',
-      'details',
-    ])
-
+    const details = HTMLElement.createDetails()
     const schoolOrigin = HTMLParser.selectOrigin(resultData.url)
     const nowDateString = DateWorker.getNowDateString()
     const aNowDate = aArray.find((a) => a.textContent.includes(nowDateString))
@@ -59,11 +53,10 @@ async function createHTML() {
     })
 
     details.append(summary, table)
-    main.append(details)
+    mainContent.append(details)
   }
 
-  header.append(h1)
-  wrapper.append(header, main, footer)
+  mainLoader.replaceWith(mainContent)
 }
 
 createHTML()
