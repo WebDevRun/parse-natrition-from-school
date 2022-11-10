@@ -7,7 +7,7 @@ This project shows the food menu on school websites.
 ## Install
 
 This project has been created using **webpack**.
-You con run to install all dependencies.
+You can run to install all dependencies.
 
 ```
 npm i
